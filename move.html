@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>dialog</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="dialog">
+    <div class="transalte clearfix">
+      <div class="menu-info fl">
+        <div class="search">
+          <input type="text" class="search-text">
+          <a class="btn search-btn" href="#">查找</a>
+        </div>
+        <ul id="mainMenu" class="menu-list">
+          <li>11111</li>
+          <li>22222</li>
+          <li>33333</li>
+          <li>44444</li>
+          <li>55555</li>
+          <li>66666</li>
+          <li>77777</li>
+          <li>88888</li>
+        </ul>
+        <div class="btn-group text-left">
+          <a id="toPrev" href="javascript:void(0)" class="btn">上一页</a>
+          <a id="toNext" href="javascript:void(0)" class="btn">下一页</a>
+        </div>
+      </div>
+      <div class="fl">
+        <ul class="btn-list">
+          <li><a id="toRight" class="btn" href="javascript:void(0)">&gt;&gt;</a></li>
+          <li><a id="allToRight" class="btn" href="javascript:void(0)">&gt;&gt;&gt;</a></li>
+          <li><a id="toLeft" class="btn" href="javascript:void(0)">&lt;&lt;</a></li>
+          <li><a id="allToLeft" class="btn" href="javascript:void(0)">&lt;&lt;&lt;</a></li>
+        </ul>
+      </div>
+      <div class="fr menu-info">
+        <h3>所选定的人员</h3>
+        <ul id="showMenu" class="menu-list">
+        </ul>
+        <div class="btn-group text-left">
+          <a href="javascript:void(0)" class="btn" id="toUp">上移</a>
+          <a href="javascript:void(0)" class="btn" id="toDown">下移</a>
+        </div>
+      </div>
+    </div>
+    <div class="btn-group">
+      <a href="javascript:void(0)" class="btn">确&ensp;定</a>
+      <a href="javascript:void(0)" class="btn">取&ensp;消</a>
+    </div>
+  </div>
+  <script src="jquery.min.js"></script>
+  <script type="text/javascript">
+    $('.menu-list').on('click','li',function() {
+      $(this).toggleClass('selected');
+    });
+    // $('.menu-list').on('dblclick','li',function() {
+    //   var listA = $(this);
+    //   var listB = $('#showMenu');
+    //   var classA = 'selected';
+    //   move(listA, listB, classA);
+    // });
+    $('#toRight').on('click',function(){
+      // var cloneTxt = $('#mainMenu').find('li.selected').clone();
+      // $('#mainMenu').find('li.selected').remove();
+      // $('#showMenu').append(cloneTxt).find('li.selected').removeClass('selected');
+      var listA = $('#mainMenu').find('li.selected');
+      var listB = $('#showMenu');
+      var classA = 'selected';
+      move(listA, listB, classA);
+    });
+    $('#allToRight').on('click',function(){
+      var listA = $('#mainMenu').find('li');
+      var listB = $('#showMenu');
+      var classA = 'selected';
+      move(listA, listB, classA);
+    });
+    $('#toLeft').on('click',function(){
+      var listA = $('#showMenu').find('li.selected');
+      var listB = $('#mainMenu');
+      var classA = 'selected';
+      move(listA, listB, classA);
+    });
+    $('#allToLeft').on('click',function(){
+      var listA = $('#showMenu').find('li');
+      var listB = $('#mainMenu');
+      var classA = 'selected';
+      move(listA, listB, classA);
+    });
+
+    function move(listA,listB,classA) {
+      var cloneTxt = listA.clone();
+      if(cloneTxt.length != 0) {
+        listA.remove();
+        listB.append(cloneTxt).find('.'+classA).removeClass(classA);
+      }else {
+        alert('please choose one');
+      }
+    }
+    //上移
+      $('#toUp').on('click',function() {
+        var $li = $('#showMenu').find('li.selected');
+        if($li.index() != 0) {
+          $li.prev().before($li);
+        }
+      })
+      //下移
+      var liLength = $("#showMenu li").length; 
+      $('#toDown').on('click',function() {
+        var $li = $('#showMenu').find('li.selected');
+        if($li.index() != liLength - 1) {
+          $li.next().after($li);
+        }
+      })
+   
+  </script>
+</body>
+</html>
